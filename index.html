@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Makanaka 💖</title>
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  color:white;
+  text-align:center;
+  background:black;
+  overflow:hidden;
+}
+.hidden { display:none; }
+#startScreen {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:48px;
+  z-index:10;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse {0%,100% {opacity:1;} 50% {opacity:0.6;}}
+.glow { text-shadow:0 0 20px #fff,0 0 40px #f0f; }
+.container,.section {padding:30px;}
+.btn {
+  display:block;
+  margin:20px auto;
+  padding:18px;
+  background:rgba(255,255,255,0.1);
+  border:none;
+  border-radius:16px;
+  color:white;
+  width:85%;
+  font-size:22px;
+  cursor:pointer;
+}
+.particle {
+  position:fixed;
+  font-size:60px;
+  animation:float 3s forwards;
+  z-index:5;
+}
+@keyframes float {
+  to {transform:translateY(-100vh) scale(2.5); opacity:0;}
+}
+.stars {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url('https://www.transparenttextures.com/patterns/stardust.png');
+  animation:move 60s linear infinite;
+  z-index:-1;
+}
+@keyframes move {from {background-position:0 0;} to {background-position:2000px 2000px;}}
+.gif-scene {max-width:95%; margin:25px auto; border-radius:12px; display:block;}
+p { font-size:28px; line-height:1.8; margin:20px auto; max-width:900px; }
+.back {cursor:pointer; margin-top:25px; font-size:20px; text-decoration:underline; color:#ffb6c1;}
+</style>
+</head>
+<body>
+
+<div id="startScreen" onclick="startSite()">
+  <h1>Tap to open 💖</h1>
+</div>
+
+<iframe id="music" width="0" height="0"
+src="https://www.youtube.com/embed/nsdQu4-KYyo?enablejsapi=1&loop=1&playlist=nsdQu4-KYyo"
+frameborder="0"></iframe>
+
+<div class="stars"></div>
+
+<div id="home" class="container hidden">
+<h1 class="glow">Hey Makanaka 💖</h1>
+<p id="intro"></p>
+<img class="gif-scene" src="https://i.gifer.com/0Yp.gif" alt="Couple holding hands">
+<button class="btn" onclick="show('safe')">My Safe Space</button>
+<button class="btn" onclick="show('universe')">In Every Universe</button>
+<button class="btn" onclick="show('talk')">Hear From Me</button>
+<button class="btn" onclick="unlockVault()">Hidden Section 🔐</button>
+</div>
+
+<div id="safe" class="section hidden">
+<h2>My Safe Space</h2>
+<p id="safeText"></p>
+<pre id="poem"></pre>
+<img class="gif-scene" src="https://i.gifer.com/3o6M.gif" alt="Couple hugging">
+<div class="back" onclick="show('home')">← back</div>
+</div>
+
+<div id="universe" class="section hidden">
+<h2>In Every Universe</h2>
+<p id="uniText"></p>
+<img class="gif-scene" src="https://i.gifer.com/ZUyM.gif" alt="Boy surprising girl with bouquet">
+<div class="back" onclick="show('home')">← back</div>
+</div>
+
+<div id="talk" class="section hidden">
+<h2>If You Ever Want to Hear From Me</h2>
+<div id="chat"></div>
+<div class="back" onclick="show('home')">← back</div>
+</div>
+
+<div id="vault" class="section hidden">
+<h2>If You Ever Need a Reminder</h2>
+<p id="vaultText"></p>
+<div class="back" onclick="show('home')">← back</div>
+</div>
+
+<script>
+// START SITE
+function startSite(){
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("home").classList.remove("hidden");
+
+  let iframe = document.getElementById("music");
+  iframe.src += "&autoplay=1";
+
+  typeText("intro","Babey girl… I know I hurt you and I hate that I made you feel overwhelmed. You’re my world and I never want you to feel alone. I love you forever, and I’ll always try to be better for us. You mean everything to me, babey girl, and I promise to always make you feel loved and safe.");
+  typeText("safeText","You were supposed to feel safe with me… and I messed that up. I’m so sorry, babey girl. I promise to hold you close and make our space full of love and comfort. I’ll always protect your heart and be your safe place. You are my universe, my heartbeat, my everything.");
+  typeText("uniText","In every universe I’d find you, love you, and choose you again and again. You’re my everything, my babey girl. I love you more than words can say, and nothing will change that. Forever and always, you’re my world.");
+
+  // Add romantic poem
+  document.getElementById("poem").innerText = `Babey girl, my heart is yours to keep,
+Through every tear, through every leap.
+I’ll hold you close, I’ll never stray,
+With you, my love, I’ll always stay.`;
+}
+
+// TYPE EFFECT
+function typeText(id,text){
+  let el=document.getElementById(id);
+  el.innerHTML="";
+  let i=0;
+  function typing(){if(i<text.length){el.innerHTML+=text.charAt(i);i++;setTimeout(typing,35);}}
+  typing();
+}
+
+// SHOW SECTION
+function show(section){
+  document.querySelectorAll('.container,.section').forEach(el=>el.classList.add("hidden"));
+  document.getElementById(section).classList.remove("hidden");
+
+  if(section==="vault"){
+    document.getElementById("vaultText").innerText="Babey girl… I know I hurt you. I’m learning every day. I’ll always be here for you. You’re my world and my heart belongs to you. Always.";
+    explodeParticles();
+  }
+
+  if(section==="talk"){
+    let chat=document.getElementById("chat");
+    chat.innerHTML="";
+    setTimeout(()=>chat.innerHTML+="<p><b>Her:</b> I feel so overwhelmed…</p>",1000);
+    setTimeout(()=>chat.innerHTML+="<p><b>Me:</b> I understand, babey girl… I didn’t listen properly before. I’m sorry.</p>",2500);
+    setTimeout(()=>chat.innerHTML+="<p><b>Her:</b> I need space…</p>",4500);
+    setTimeout(()=>chat.innerHTML+="<p><b>Me:</b> Take your time, love. I’ll be right here waiting, always.</p>",6500);
+    setTimeout(()=>chat.innerHTML+="<p><b>Her:</b> I miss you…</p>",8500);
+    setTimeout(()=>chat.innerHTML+="<p class='glow'><b>Me:</b> Babey girl, I miss you more than I can explain. You’re my world, my heart, my everything.</p>",10500);
+  }
+}
+
+// EXPLODE PARTICLES
+function explodeParticles(){
+  let icons=["🌸","💖","🌼","💮"];
+  for(let i=0;i<80;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+    p.innerText=icons[Math.floor(Math.random()*icons.length)];
+    p.style.left=Math.random()*100+"vw";
+    p.style.top="80vh";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),4000);
+  }
+}
+
+// CLICK HEARTS EVERYWHERE
+document.addEventListener("click",()=>{
+  let heart=document.createElement("div");
+  heart.className="particle";
+  heart.innerText="💖";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.top="80vh";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),3500);
+});
+
+// UNLOCK VAULT
+function unlockVault(){
+  let pass=prompt("Enter password:");
+  if(pass==="tamakar08") show("vault");
+  else alert("Wrong password");
+}
+</script>
+</body>
+</html>
